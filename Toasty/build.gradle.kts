@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id ("maven-publish")
+    id("maven-publish")
 }
 
 android {
@@ -10,7 +10,6 @@ android {
 
     defaultConfig {
         minSdk = 29
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -24,6 +23,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -31,6 +31,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -40,11 +41,26 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.Tejas-KTC"   // 👈 your GitHub username
+                artifactId = "Toasty"                      // 👈 your library name
+                version = "1.0.1"                          // 👈 bump version
+
+            }
+        }
+    }
 }

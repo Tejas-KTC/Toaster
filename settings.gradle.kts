@@ -20,5 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Toasty"
-include(":app")
 include(":Toasty")
